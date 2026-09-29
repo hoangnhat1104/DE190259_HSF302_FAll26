@@ -1,5 +1,6 @@
 package service;
 
+import dto.DepartmentStatDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +31,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> findDepartmentsWithoutStudents() {
         return departmentRepository.findByStudentsIsEmpty();
+    }
+
+    @Override
+    public List<DepartmentStatDTO> getStatistics() {
+        return departmentRepository.getDepartmentStats();
     }
 }
