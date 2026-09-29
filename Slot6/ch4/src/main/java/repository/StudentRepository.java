@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import dto.StudentSummary;
 import pojo.Gender;
+import pojo.Department;
 import pojo.Student;
 
 import java.time.LocalDate;
@@ -82,4 +83,9 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE Student s SET s.active = false WHERE s.gpa < :threshold AND s.active = true")
     int deactivateLowGpa(@Param("threshold") double threshold);
+
+    // ===== TODO 22 =====
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("UPDATE Student s SET s.department = :to WHERE s.department = :from")
+    int transferStudents(@Param("from") Department from, @Param("to") Department to);
 }
