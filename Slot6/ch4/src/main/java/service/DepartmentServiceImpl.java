@@ -12,7 +12,16 @@ import repository.StudentRepository;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
-    private final StudentRepository studentRepository;      // dùng ở TODO 22 (chuyển sinh viên)
+    private final StudentRepository studentRepository;
 
-    // Các method được cài đặt dần từ TODO 6
+    // ===== Part B =====
+    @Override
+    public long count() {
+        return departmentRepository.count();
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return departmentRepository.existsById(id);
+    }
 }
