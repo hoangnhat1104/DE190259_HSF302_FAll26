@@ -25,4 +25,5 @@ public interface StudentService {
     List<Student> findByDepartment(String deptCode);                           // TODO 11
     long countByDepartment(String deptCode);                                   // TODO 11
     List<Student> findTop3ByGpa();                                             // TODO 11
+    List<Student> findGoodStudents(String deptCode, double minGpa);            // TODO 12
 }
