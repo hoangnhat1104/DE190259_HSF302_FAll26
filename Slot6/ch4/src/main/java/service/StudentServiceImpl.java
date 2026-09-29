@@ -8,6 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dto.StudentSummary;
+import org.springframework.data.jpa.domain.Specification;
+import specification.StudentSpecs;
 import pojo.Gender;
 import pojo.Student;
 import repository.StudentRepository;
@@ -176,5 +178,14 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public long deleteInactiveStudents() {
         return studentRepository.deleteByActiveFalse();
+    }
+
+    @Override
+    public List<Student> search(String kw, String deptCode, Double minGpa, Boolean active) {
+        Specification<Student> spec = Specification.where(StudentSpecs.nameContains(kw))
+                .and(StudentSpecs.inDepartment(deptCode))
+                .and(StudentSpecs.gpaAtLeast(minGpa))
+                .and(StudentSpecs.isActive(active));
+        return studentRepository.findAll(spec, Sort.by("fullName"));
     }
 }

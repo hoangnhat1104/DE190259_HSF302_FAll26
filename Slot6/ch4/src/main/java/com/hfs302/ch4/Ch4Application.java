@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.hfs302.ch4", "service", "runner"})
+@ComponentScan(basePackages = {"com.hfs302.ch4", "service", "runner", "specification"})
 @EnableJpaRepositories(basePackages = {"repository"})
 public class Ch4Application {
 
