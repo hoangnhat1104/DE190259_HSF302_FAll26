@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import dto.StudentSummary;
 import pojo.Gender;
 import pojo.Student;
 
@@ -61,4 +62,12 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
                    "ORDER BY s.gpa DESC",
            nativeQuery = true)
     List<Student> findTopNByDepartmentNative(@Param("code") String code, @Param("n") int n);
+
+    // ===== TODO 18 =====
+    @Query("SELECT s.studentCode AS studentCode, s.fullName AS fullName, " +
+           "       s.gpa AS gpa, d.name AS departmentName " +
+           "FROM Student s JOIN s.department d " +
+           "WHERE s.active = true " +
+           "ORDER BY s.fullName")
+    List<StudentSummary> findActiveSummaries();
 }
