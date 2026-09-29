@@ -1,10 +1,14 @@
 package service;
 
+import org.springframework.data.domain.Page;
 import pojo.Student;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StudentService {
-    long count();                            // TODO 6
-    Optional<Student> findById(Long id);     // TODO 6
+    long count();                                                               // TODO 6
+    Optional<Student> findById(Long id);                                       // TODO 6
+    List<Student> findAllOrderByGpaDesc();                                     // TODO 7
+    Page<Student> findPage(int pageIndex, int size, String sortField);         // TODO 7
 }
