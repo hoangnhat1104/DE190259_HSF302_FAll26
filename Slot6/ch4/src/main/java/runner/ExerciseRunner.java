@@ -121,7 +121,23 @@ public class ExerciseRunner implements CommandLineRunner {
         title("TODO 15: Subquery - GPA above average");
         printList("GPA > AVG", studentService.findAboveAverageGpa());
     }
-    private void todo16() { }
+    private void todo16() {
+        title("TODO 16: LazyInitializationException & JOIN FETCH");
+
+        // (a) Tái hiện lỗi
+        pojo.Department ai = departmentService.findByCode("AI").orElseThrow();
+        try {
+            System.out.println("AI has " + ai.getStudents().size() + " students");
+        } catch (org.hibernate.LazyInitializationException e) {
+            System.out.println("(a) Caught: " + e.getClass().getSimpleName());
+            System.out.println("    " + e.getMessage());
+        }
+
+        // (b) Sửa bằng JOIN FETCH
+        pojo.Department aiFull = departmentService.getWithStudents("AI");
+        System.out.println("(b) " + aiFull);
+        aiFull.getStudents().forEach(s -> System.out.println("     " + s));
+    }
     private void todo17() { }
     private void todo18() { }
     private void todo19() { }
