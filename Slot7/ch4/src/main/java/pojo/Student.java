@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -42,10 +45,43 @@ public class Student {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
+    // Owning side: Student quan ly bang trung gian student_courses
+    @ManyToMany
+    @JoinTable(
+        name = "student_courses",
+        joinColumns = @JoinColumn(name = "student_id"),          // FK -> students.id
+        inverseJoinColumns = @JoinColumn(name = "course_id")     // FK -> courses.id
+    )
+    private Set<Course> courses = new HashSet<>();
+
+    // ===== Helper dong bo 2 chieu =====
+    public void enroll(Course c) {
+        courses.add(c);                 // owning side -> Hibernate INSERT vao student_courses
+        c.getStudents().add(this);      // inverse side -> giu object Java nhat quan
+    }
+
+    public void unenroll(Course c) {
+        courses.remove(c);              // owning side -> Hibernate DELETE khoi student_courses
+        c.getStudents().remove(this);
+    }
+
+    // equals/hashCode theo business key studentCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student other)) return false;
+        return studentCode != null && studentCode.equals(other.getStudentCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(studentCode);
+    }
+
     @Override
     public String toString() {
         return String.format("%s | %-15s | %-20s | %.1f | %s",
                 studentCode, fullName, email, gpa, active ? "active" : "inactive");
-        // KHÔNG in department → tránh LazyInitializationException
+        // KHONG in department, courses -> tranh LazyInitializationException
     }
 }
