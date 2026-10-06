@@ -70,7 +70,11 @@ public class Exercise2Runner implements CommandLineRunner {
                     + courseService.findById(id).map(Course::toString).orElse("Not found"));
         }
     }
-    private void todo7()  { title("TODO 7  - chua implement"); }
+    private void todo7() {
+        title("TODO 7: navigate student.getCourses() / course.getStudents()");
+        printList("(a) Courses of SE001", enrollmentService.getCoursesOfStudent("SE001"));
+        printList("(b) Students of AIL303", enrollmentService.getStudentsOfCourse("AIL303"));
+    }
     private void todo8()  { title("TODO 8  - chua implement"); }
     private void todo9()  { title("TODO 9  - chua implement"); }
     private void todo10() { title("TODO 10 - chua implement"); }

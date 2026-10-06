@@ -3,6 +3,10 @@ package repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pojo.Course;
 
+import java.util.Optional;
+
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    // bo sung dan tu TODO 7
+
+    // ===== TODO 7 =====
+    Optional<Course> findByCode(String code);
 }
