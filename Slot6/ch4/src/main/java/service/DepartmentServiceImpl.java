@@ -1,0 +1,81 @@
+package service;
+
+import dto.DepartmentStatDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pojo.Department;
+import repository.DepartmentRepository;
+import repository.StudentRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class DepartmentServiceImpl implements DepartmentService {
+
+    private final DepartmentRepository departmentRepository;
+    private final StudentRepository studentRepository;
+
+    @Override
+    public long count() {
+        return departmentRepository.count();
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return departmentRepository.existsById(id);
+    }
+
+    @Override
+    public List<Department> findDepartmentsWithoutStudents() {
+        return departmentRepository.findByStudentsIsEmpty();
+    }
+
+    @Override
+    public List<DepartmentStatDTO> getStatistics() {
+        return departmentRepository.getDepartmentStats();
+    }
+
+    @Override
+    public Optional<Department> findByCode(String code) {
+        return departmentRepository.findByCode(code);
+    }
+
+    @Override
+    public Department getWithStudents(String code) {
+        return departmentRepository.findByCodeWithStudents(code)
+                .orElseThrow(() -> new IllegalArgumentException("Department not found: " + code));
+    }
+
+    @Override
+    @Transactional
+    public int transferStudentsAndDelete(String fromCode, String toCode) {
+        if (fromCode.equals(toCode)) {
+            throw new IllegalArgumentException("Khoa nguồn và khoa đích phải khác nhau");
+        }
+        Department from = departmentRepository.findByCode(fromCode)
+                .orElseThrow(() -> new IllegalArgumentException("Department not found: " + fromCode));
+        Department to = departmentRepository.findByCode(toCode)
+                .orElseThrow(() -> new IllegalArgumentException("Department not found: " + toCode));
+
+        int moved = studentRepository.transferStudents(from, to);
+        departmentRepository.deleteById(from.getId());
+        return moved;
+    }
+
+    @Override
+    public List<Department> findAll() {
+        return departmentRepository.findAll(org.springframework.data.domain.Sort.by("id"));
+    }
+
+    @Override
+    public void printStudentCountNative() {
+        List<Object[]> rows = departmentRepository.countStudentsPerDepartmentNative();
+        rows.forEach(row ->
+            System.out.printf("   %-3s | %s students%n", row[0], row[2])
+        );
+    }
+}
