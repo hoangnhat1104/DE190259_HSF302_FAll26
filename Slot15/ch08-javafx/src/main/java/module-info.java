@@ -1,6 +1,7 @@
 module com.fu.ch08 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 //    requires javafx.web;      // T5
 //    requires javafx.media;    // T5
 
