@@ -1,13 +1,11 @@
 module com.fu.ch08 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
 //    requires javafx.web;      // T5
 //    requires javafx.media;    // T5
 
     // FXMLLoader cần reflection vào controller (@FXML private field/method)
-    // (Mở ra khi làm đến các bài tương ứng, nếu chưa tạo package sẽ bị lỗi InvalidModuleDescriptorException)
-//    opens com.fu.ch08.b4 to javafx.fxml;
+    opens com.fu.ch08.b4 to javafx.fxml;
 //    opens com.fu.ch08.b5 to javafx.fxml;
 //    opens com.fu.ch08.b6 to javafx.fxml;
 //    opens com.fu.ch08.t1 to javafx.fxml, javafx.base;   // javafx.base: PropertyValueFactory (TableView)
@@ -18,7 +16,7 @@ module com.fu.ch08 {
     exports com.fu.ch08.b1;
     exports com.fu.ch08.b2;
     exports com.fu.ch08.b3;
-//    exports com.fu.ch08.b4;
+    exports com.fu.ch08.b4;
 //    exports com.fu.ch08.b5;
 //    exports com.fu.ch08.b6;
 //    exports com.fu.ch08.t1;

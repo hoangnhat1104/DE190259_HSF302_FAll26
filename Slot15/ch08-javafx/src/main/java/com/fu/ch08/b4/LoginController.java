@@ -1,19 +1,20 @@
 package com.fu.ch08.b4;
 
 import com.fu.ch08.common.AlertUtil;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+
+
+
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
+
 import java.io.IOException;
 import java.util.Map;
 
