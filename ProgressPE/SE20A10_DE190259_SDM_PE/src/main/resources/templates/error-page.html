@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, Helvetica, sans-serif; background: #f4f6f9; color: #1c2530; margin: 0; }
+        .container { max-width: 750px; margin: 30px auto; padding: 0 16px; }
+        .panel { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+        .alert { padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-weight: bold; }
+        .alert-danger { background: #f8d7da; color: #7a1f27; border: 1px solid #eec2c6; }
+        .btn { display: inline-block; padding: 7px 16px; border: 1px solid #1a5276; border-radius: 4px;
+            background: #2471a3; color: #fff; text-decoration: none; cursor: pointer; font-size: 14px; }
+        .btn:hover { background: #1a5276; }
+        .actions { margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="panel">
+        <div class="alert alert-danger" th:text="${errorMessage}">Something went wrong while processing your request. Please go back and try again.</div>
+        <div class="actions">
+            <a th:href="@{/}" class="btn">Back to list</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
